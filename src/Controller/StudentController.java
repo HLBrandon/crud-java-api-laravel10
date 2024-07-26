@@ -45,7 +45,7 @@ public class StudentController implements ActionListener {
             student.setAge(Integer.parseInt(view.txt_age.getText()));
             student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
             if (apiS.create(student)) {
-                JOptionPane.showMessageDialog(null, "Student Created with exit");
+                JOptionPane.showMessageDialog(null, "Student Created successfully");
                 limpiarCampos();
             } else {
                 JOptionPane.showMessageDialog(null, "Error");
@@ -62,7 +62,7 @@ public class StudentController implements ActionListener {
                 view.txt_age.setText(String.valueOf(student.getAge()));
                 view.txt_career.setText(String.valueOf(student.getCareer_id()));
             } else {
-                JOptionPane.showMessageDialog(null, "Student not exist");
+                JOptionPane.showMessageDialog(null, "The Student does not exist");
                 limpiarCampos();
             }
         }
@@ -76,7 +76,7 @@ public class StudentController implements ActionListener {
             student.setAge(Integer.parseInt(view.txt_age.getText()));
             student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
             if (apiS.update(student)) {
-                JOptionPane.showMessageDialog(null, "Student Updated with exit");
+                JOptionPane.showMessageDialog(null, "Student Updated successfully");
                 limpiarCampos();
             } else {
                 JOptionPane.showMessageDialog(null, "Error");
@@ -86,9 +86,9 @@ public class StudentController implements ActionListener {
         if (e.getSource() == view.btnEliminar) {
             student.setId(Integer.parseInt(view.txt_id.getText()));
             if (apiS.delete(student)) {
-                JOptionPane.showMessageDialog(null, "Student Deleted");
+                JOptionPane.showMessageDialog(null, "Student Deleted successfully");
             } else {
-                JOptionPane.showMessageDialog(null, "Student not exist");
+                JOptionPane.showMessageDialog(null, "The Student does not exist");
             }
             limpiarCampos();
         }
