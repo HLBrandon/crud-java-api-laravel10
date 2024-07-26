@@ -27,7 +27,7 @@ public class StudentController implements ActionListener {
 
     public void run() {
 
-        view.setTitle("Simple CRUD with API Laravel 10");
+        view.setTitle("Simple CRUD with API Laravel");
         view.setResizable(false);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
