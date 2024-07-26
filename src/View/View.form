@@ -53,7 +53,7 @@
                           <Component id="btnCrear" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                           <Component id="btnEditar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="79" max="32767" attributes="0"/>
+                          <EmptySpace pref="109" max="32767" attributes="0"/>
                           <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                           <Component id="btnLimpiar" min="-2" max="-2" attributes="0"/>
@@ -271,7 +271,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnCrear">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CREAR"/>
+            <Property name="text" type="java.lang.String" value="CREATE"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -279,7 +279,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnEditar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="EDITAR"/>
+            <Property name="text" type="java.lang.String" value="EDIT"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -287,7 +287,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnLimpiar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="LIMPIAR"/>
+            <Property name="text" type="java.lang.String" value="CLEAN"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -295,7 +295,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnEliminar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="ELIMINAR"/>
+            <Property name="text" type="java.lang.String" value="DELETE"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -303,7 +303,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnBuscar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="BUSCAR"/>
+            <Property name="text" type="java.lang.String" value="Search"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

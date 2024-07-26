@@ -89,15 +89,15 @@ public class View extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("Id:");
 
-        btnCrear.setText("CREAR");
+        btnCrear.setText("CREATE");
 
-        btnEditar.setText("EDITAR");
+        btnEditar.setText("EDIT");
 
-        btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.setText("CLEAN");
 
-        btnEliminar.setText("ELIMINAR");
+        btnEliminar.setText("DELETE");
 
-        btnBuscar.setText("BUSCAR");
+        btnBuscar.setText("Search");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -110,7 +110,7 @@ public class View extends javax.swing.JFrame {
                         .addComponent(btnCrear)
                         .addGap(61, 61, 61)
                         .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                         .addComponent(btnEliminar)
                         .addGap(70, 70, 70)
                         .addComponent(btnLimpiar))
