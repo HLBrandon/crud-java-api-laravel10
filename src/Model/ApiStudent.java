@@ -3,13 +3,63 @@ package Model;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ApiStudent {
 
     private final String urlApi = "http://127.0.0.1:8000/api/student/";
     private int responseCode;
+    
+    public List index (Student student) {
+        List<Student>datos = new ArrayList<>();
+        
+        try {
+            URL url = new URL(urlApi);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            responseCode = conn.getResponseCode();
+
+            if (responseCode == 200) { // 200 Codigo HTTP exitoso
+                
+                StringBuilder stringBuilder = new StringBuilder();
+                Scanner sc = new Scanner(url.openStream());
+                
+                while (sc.hasNext()) {                    
+                    stringBuilder.append(sc.nextLine());
+                }
+                sc.close();
+                
+                JSONArray jsonArray = new JSONArray(stringBuilder.toString());
+                
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    student = new Student();
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    student.setId(jsonObject.getInt("id"));
+                    student.setFirst_name(jsonObject.getString("first_name"));
+                    student.setLast_name(jsonObject.getString("last_name"));
+                    student.setEmail(jsonObject.getString("email"));
+                    student.setAge(jsonObject.getInt("age"));
+                    student.setCareer_id(jsonObject.getJSONObject("career").getInt("career_id"));
+                    student.setCareer_name(jsonObject.getJSONObject("career").getString("career_name"));
+                    datos.add(student);
+                }
+                
+            } else {
+                throw new RuntimeException("Ocurrio un error: " + responseCode);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        return datos;
+    }
 
     public boolean create(Student student) {
 

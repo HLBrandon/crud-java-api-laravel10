@@ -10,6 +10,7 @@ public class Student {
     private String password;
     private int age;
     private int career_id;
+    private String career_name;
 
     public int getId() {
         return id;
@@ -65,6 +66,14 @@ public class Student {
 
     public void setCareer_id(int career_id) {
         this.career_id = career_id;
+    }
+
+    public String getCareer_name() {
+        return career_name;
+    }
+
+    public void setCareer_name(String career_name) {
+        this.career_name = career_name;
     }
     
 }
