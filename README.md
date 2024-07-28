@@ -12,6 +12,12 @@ Run Main Class.
 
 ![Captura de pantalla 2024-07-26 105806](https://github.com/user-attachments/assets/12f71b00-6b91-4e44-8709-7d08057c6bea)
 
+> first version
+
+![Captura de pantalla 2024-07-27 232117](https://github.com/user-attachments/assets/37d233a6-e3eb-4aab-bef8-66ac498f98e8)
+
+> new version
+
 ### Create new Student
 
 Complete the entire form.
