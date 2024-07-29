@@ -54,6 +54,7 @@ public class StudentController implements ActionListener, MouseListener {
             student.setAge(Integer.parseInt(view.txt_age.getText()));
             student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
             if (apiS.create(student)) {
+                cargarCreateRow(view.tabla);
                 JOptionPane.showMessageDialog(null, "Student Created successfully");
                 limpiarCampos();
             } else {
@@ -102,8 +103,8 @@ public class StudentController implements ActionListener, MouseListener {
         view.txt_age.setText("");
         view.txt_career.setText("");
     }
-    
-    public void cargarTable (JTable tabla) {
+
+    public void cargarTable(JTable tabla) {
         modelTablaStudent = (DefaultTableModel) tabla.getModel();
         List<Student> lista = apiS.index(student);
         Object[] obj = new Object[5];
@@ -115,7 +116,19 @@ public class StudentController implements ActionListener, MouseListener {
             obj[4] = lista.get(i).getCareer_name();
             modelTablaStudent.addRow(obj);
         }
-        view.tabla.setModel(modelTablaStudent);
+        tabla.setModel(modelTablaStudent);
+    }
+
+    public void cargarCreateRow(JTable tabla) {
+        modelTablaStudent = (DefaultTableModel) tabla.getModel();
+        Object[] obj = new Object[5];
+        obj[0] = student.getId();
+        obj[1] = student.getFirst_name() + " " + student.getLast_name();
+        obj[2] = student.getEmail();
+        obj[3] = student.getAge();
+        obj[4] = student.getCareer_name();
+        modelTablaStudent.addRow(obj);
+        tabla.setModel(modelTablaStudent);
     }
 
     @Override
@@ -124,7 +137,7 @@ public class StudentController implements ActionListener, MouseListener {
             fila = view.tabla.getSelectedRow();
             int id = view.tabla.getValueAt(fila, 0).hashCode();
             System.out.println(id);
-            
+
             student.setId(id);
             if (apiS.show(student)) {
                 view.txt_id.setText(String.valueOf(student.getId()));
@@ -141,15 +154,19 @@ public class StudentController implements ActionListener, MouseListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    }
 
     @Override
-    public void mouseReleased(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {
+    }
 
     @Override
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+    }
 
     @Override
-    public void mouseExited(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {
+    }
 
 }
