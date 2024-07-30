@@ -142,8 +142,6 @@ public class StudentController implements ActionListener, MouseListener {
         if (e.getSource() == view.tabla) {
             fila = view.tabla.getSelectedRow();
             int id = view.tabla.getValueAt(fila, 0).hashCode();
-            System.out.println(id);
-
             student.setId(id);
             if (apiS.show(student)) {
                 view.txt_id.setText(String.valueOf(student.getId()));
