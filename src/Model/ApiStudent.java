@@ -144,6 +144,20 @@ public class ApiStudent {
             responseCode = conn.getResponseCode();
 
             if (responseCode == 200) { // 200 Codigo HTTP para Exito
+                StringBuilder stringBuilder = new StringBuilder();
+                Scanner sc = new Scanner(conn.getInputStream());
+                while (sc.hasNext()) {                    
+                    stringBuilder.append(sc.nextLine());
+                }
+                sc.close();
+                JSONObject jsonObject = new JSONObject(stringBuilder.toString());
+                JSONObject data = jsonObject.getJSONObject("data");
+                student.setId(data.getInt("id"));
+                student.setFirst_name(data.getString("first_name"));
+                student.setLast_name(data.getString("last_name"));
+                student.setEmail(data.getString("email"));
+                student.setAge(data.getInt("age"));
+                student.setCareer_name(data.getJSONObject("career").getString("career_name"));
                 return true;
             } else {
                 return false;

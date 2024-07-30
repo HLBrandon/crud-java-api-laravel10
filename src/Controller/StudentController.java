@@ -18,7 +18,7 @@ public class StudentController implements ActionListener, MouseListener {
     private ApiStudent apiS;
     private View view;
     private DefaultTableModel modelTablaStudent;
-    private int fila;
+    private int fila = -1;
 
     public StudentController(Student student, ApiStudent apiS, View view) {
         this.student = student;
@@ -71,6 +71,11 @@ public class StudentController implements ActionListener, MouseListener {
             student.setAge(Integer.parseInt(view.txt_age.getText()));
             student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
             if (apiS.update(student)) {
+                view.tabla.setValueAt(student.getId(), fila, 0);
+                view.tabla.setValueAt(student.getFirst_name() + " " + student.getLast_name(), fila, 1);
+                view.tabla.setValueAt(student.getEmail(), fila, 2);
+                view.tabla.setValueAt(student.getAge(), fila, 3);
+                view.tabla.setValueAt(student.getCareer_name(), fila, 4);
                 JOptionPane.showMessageDialog(null, "Student Updated successfully");
                 limpiarCampos();
             } else {
@@ -95,6 +100,7 @@ public class StudentController implements ActionListener, MouseListener {
     }
 
     public void limpiarCampos() {
+        fila = -1;
         view.txt_id.setText("");
         view.txt_firstName.setText("");
         view.txt_lastName.setText("");
