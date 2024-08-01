@@ -38,6 +38,8 @@ public class StudentController implements ActionListener, MouseListener {
         view.setResizable(false);
         view.setLocationRelativeTo(null);
         view.txt_id.setVisible(false);
+        view.btnEditar.setEnabled(false);
+        view.btnEliminar.setEnabled(false);
         cargarTable(view.tabla);
         view.setVisible(true);
 
@@ -47,18 +49,22 @@ public class StudentController implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == view.btnCrear) {
-            student.setFirst_name(view.txt_firstName.getText());
-            student.setLast_name(view.txt_lastName.getText());
-            student.setEmail(view.txt_email.getText());
-            student.setPassword(view.txt_password.getText());
-            student.setAge(Integer.parseInt(view.txt_age.getText()));
-            student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
-            if (apiS.create(student)) {
-                cargarCreateRow(view.tabla);
-                JOptionPane.showMessageDialog(null, "Student Created successfully");
-                limpiarCampos();
+            if (!"".equals(view.txt_firstName.getText()) && !"".equals(view.txt_lastName.getText()) && !"".equals(view.txt_email.getText()) && !"".equals(view.txt_password.getText()) && !"".equals(view.txt_age.getText()) && !"".equals(view.txt_career.getText())) {
+                student.setFirst_name(view.txt_firstName.getText());
+                student.setLast_name(view.txt_lastName.getText());
+                student.setEmail(view.txt_email.getText());
+                student.setPassword(view.txt_password.getText());
+                student.setAge(Integer.parseInt(view.txt_age.getText()));
+                student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
+                if (apiS.create(student)) {
+                    cargarCreateRow(view.tabla);
+                    JOptionPane.showMessageDialog(null, "Student Created successfully");
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error in execute");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Error");
+                JOptionPane.showMessageDialog(null, "Complete the entire form");
             }
         }
 
@@ -84,12 +90,16 @@ public class StudentController implements ActionListener, MouseListener {
         }
 
         if (e.getSource() == view.btnEliminar) {
-            student.setId(Integer.parseInt(view.txt_id.getText()));
-            if (apiS.delete(student)) {
-                cargarRemoveRow(view.tabla);
-                JOptionPane.showMessageDialog(null, "Student Deleted successfully");
+            if (!"".equals(view.txt_id.getText())) {
+                student.setId(Integer.parseInt(view.txt_id.getText()));
+                if (apiS.delete(student)) {
+                    cargarRemoveRow(view.tabla);
+                    JOptionPane.showMessageDialog(null, "Student Deleted successfully");
+                } else {
+                    JOptionPane.showMessageDialog(null, "The Student does not exist");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "The Student does not exist");
+                JOptionPane.showMessageDialog(null, "You must select a student");
             }
             limpiarCampos();
         }
@@ -109,6 +119,9 @@ public class StudentController implements ActionListener, MouseListener {
         view.txt_password.setText("");
         view.txt_age.setText("");
         view.txt_career.setText("");
+        view.btnCrear.setEnabled(true);
+        view.btnEditar.setEnabled(false);
+        view.btnEliminar.setEnabled(false);
     }
 
     public void cargarTable(JTable tabla) {
@@ -137,8 +150,8 @@ public class StudentController implements ActionListener, MouseListener {
         modelTablaStudent.addRow(obj);
         tabla.setModel(modelTablaStudent);
     }
-    
-    public void cargarRemoveRow (JTable tabla) {
+
+    public void cargarRemoveRow(JTable tabla) {
         modelTablaStudent = (DefaultTableModel) tabla.getModel();
         modelTablaStudent.removeRow(fila);
         tabla.setModel(modelTablaStudent);
@@ -157,6 +170,9 @@ public class StudentController implements ActionListener, MouseListener {
                 view.txt_email.setText(student.getEmail());
                 view.txt_age.setText(String.valueOf(student.getAge()));
                 view.txt_career.setText(String.valueOf(student.getCareer_id()));
+                view.btnCrear.setEnabled(false);
+                view.btnEditar.setEnabled(true);
+                view.btnEliminar.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(null, "The Student does not exist");
                 limpiarCampos();
