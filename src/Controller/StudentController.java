@@ -86,6 +86,7 @@ public class StudentController implements ActionListener, MouseListener {
         if (e.getSource() == view.btnEliminar) {
             student.setId(Integer.parseInt(view.txt_id.getText()));
             if (apiS.delete(student)) {
+                cargarRemoveRow(view.tabla);
                 JOptionPane.showMessageDialog(null, "Student Deleted successfully");
             } else {
                 JOptionPane.showMessageDialog(null, "The Student does not exist");
@@ -134,6 +135,12 @@ public class StudentController implements ActionListener, MouseListener {
         obj[3] = student.getAge();
         obj[4] = student.getCareer_name();
         modelTablaStudent.addRow(obj);
+        tabla.setModel(modelTablaStudent);
+    }
+    
+    public void cargarRemoveRow (JTable tabla) {
+        modelTablaStudent = (DefaultTableModel) tabla.getModel();
+        modelTablaStudent.removeRow(fila);
         tabla.setModel(modelTablaStudent);
     }
 
