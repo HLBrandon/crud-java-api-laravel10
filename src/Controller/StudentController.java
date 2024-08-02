@@ -69,23 +69,31 @@ public class StudentController implements ActionListener, MouseListener {
         }
 
         if (e.getSource() == view.btnEditar) {
-            student.setId(Integer.parseInt(view.txt_id.getText()));
-            student.setFirst_name(view.txt_firstName.getText());
-            student.setLast_name(view.txt_lastName.getText());
-            student.setEmail(view.txt_email.getText());
-            student.setPassword(view.txt_password.getText());
-            student.setAge(Integer.parseInt(view.txt_age.getText()));
-            student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
-            if (apiS.update(student)) {
-                view.tabla.setValueAt(student.getId(), fila, 0);
-                view.tabla.setValueAt(student.getFirst_name() + " " + student.getLast_name(), fila, 1);
-                view.tabla.setValueAt(student.getEmail(), fila, 2);
-                view.tabla.setValueAt(student.getAge(), fila, 3);
-                view.tabla.setValueAt(student.getCareer_name(), fila, 4);
-                JOptionPane.showMessageDialog(null, "Student Updated successfully");
-                limpiarCampos();
+            if (!"".equals(view.txt_id.getText())) {
+                if (!"".equals(view.txt_firstName.getText()) && !"".equals(view.txt_lastName.getText()) && !"".equals(view.txt_email.getText()) && !"".equals(view.txt_age.getText()) && !"".equals(view.txt_career.getText())) {
+                    student.setId(Integer.parseInt(view.txt_id.getText()));
+                    student.setFirst_name(view.txt_firstName.getText());
+                    student.setLast_name(view.txt_lastName.getText());
+                    student.setEmail(view.txt_email.getText());
+                    student.setPassword(view.txt_password.getText());
+                    student.setAge(Integer.parseInt(view.txt_age.getText()));
+                    student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
+                    if (apiS.update(student)) {
+                        view.tabla.setValueAt(student.getId(), fila, 0);
+                        view.tabla.setValueAt(student.getFirst_name() + " " + student.getLast_name(), fila, 1);
+                        view.tabla.setValueAt(student.getEmail(), fila, 2);
+                        view.tabla.setValueAt(student.getAge(), fila, 3);
+                        view.tabla.setValueAt(student.getCareer_name(), fila, 4);
+                        JOptionPane.showMessageDialog(null, "Student Updated successfully");
+                        limpiarCampos();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Complete the entire form");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Error");
+                JOptionPane.showMessageDialog(null, "You must select a student");
             }
         }
 
