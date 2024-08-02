@@ -49,13 +49,14 @@ public class StudentController implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == view.btnCrear) {
-            if (!"".equals(view.txt_firstName.getText()) && !"".equals(view.txt_lastName.getText()) && !"".equals(view.txt_email.getText()) && !"".equals(view.txt_password.getText()) && !"".equals(view.txt_age.getText()) && !"".equals(view.txt_career.getText())) {
+            if (!"".equals(view.txt_firstName.getText()) && !"".equals(view.txt_lastName.getText()) && !"".equals(view.txt_email.getText()) && !"".equals(String.valueOf(view.txt_password.getPassword())) && !"".equals(view.txt_age.getText()) && !"".equals(view.txt_career.getText())) {
                 student.setFirst_name(view.txt_firstName.getText());
                 student.setLast_name(view.txt_lastName.getText());
                 student.setEmail(view.txt_email.getText());
-                student.setPassword(view.txt_password.getText());
+                student.setPassword(String.valueOf(view.txt_password.getPassword()));
                 student.setAge(Integer.parseInt(view.txt_age.getText()));
                 student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
+                System.out.println(student.getPassword());
                 if (apiS.create(student)) {
                     cargarCreateRow(view.tabla);
                     JOptionPane.showMessageDialog(null, "Student Created successfully");
@@ -75,7 +76,7 @@ public class StudentController implements ActionListener, MouseListener {
                     student.setFirst_name(view.txt_firstName.getText());
                     student.setLast_name(view.txt_lastName.getText());
                     student.setEmail(view.txt_email.getText());
-                    student.setPassword(view.txt_password.getText());
+                    student.setPassword(String.valueOf(view.txt_password.getPassword()));
                     student.setAge(Integer.parseInt(view.txt_age.getText()));
                     student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
                     if (apiS.update(student)) {
