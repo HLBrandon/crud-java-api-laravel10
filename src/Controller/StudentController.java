@@ -91,17 +91,20 @@ public class StudentController implements ActionListener, MouseListener {
 
         if (e.getSource() == view.btnEliminar) {
             if (!"".equals(view.txt_id.getText())) {
-                student.setId(Integer.parseInt(view.txt_id.getText()));
-                if (apiS.delete(student)) {
-                    cargarRemoveRow(view.tabla);
-                    JOptionPane.showMessageDialog(null, "Student Deleted successfully");
-                } else {
-                    JOptionPane.showMessageDialog(null, "The Student does not exist");
+                int res = JOptionPane.showConfirmDialog(null, "Delete this Student?", "Delete", JOptionPane.YES_NO_OPTION);
+                if (res == JOptionPane.YES_OPTION) {
+                    student.setId(Integer.parseInt(view.txt_id.getText()));
+                    if (apiS.delete(student)) {
+                        cargarRemoveRow(view.tabla);
+                        JOptionPane.showMessageDialog(null, "Student Deleted successfully");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "The Student does not exist");
+                    }
+                    limpiarCampos();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "You must select a student");
             }
-            limpiarCampos();
         }
 
         if (e.getSource() == view.btnLimpiar) {
