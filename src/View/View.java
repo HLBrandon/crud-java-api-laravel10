@@ -30,7 +30,6 @@ public class View extends javax.swing.JFrame {
         txt_firstName = new javax.swing.JTextField();
         txt_lastName = new javax.swing.JTextField();
         txt_email = new javax.swing.JTextField();
-        txt_password = new javax.swing.JTextField();
         txt_age = new javax.swing.JTextField();
         txt_career = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -44,6 +43,7 @@ public class View extends javax.swing.JFrame {
         btnLimpiar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        txt_password = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         txt_id = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -63,8 +63,6 @@ public class View extends javax.swing.JFrame {
         txt_lastName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txt_email.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        txt_password.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txt_age.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -99,6 +97,8 @@ public class View extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setText("CRUD WITH LARAVEL 10");
 
+        txt_password.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -125,11 +125,11 @@ public class View extends javax.swing.JFrame {
                         .addGap(18, 45, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txt_age, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
-                            .addComponent(txt_password)
                             .addComponent(txt_email)
                             .addComponent(txt_lastName)
                             .addComponent(txt_firstName)
-                            .addComponent(txt_career))))
+                            .addComponent(txt_career)
+                            .addComponent(txt_password))))
                 .addGap(46, 46, 46))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -153,11 +153,11 @@ public class View extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(28, 28, 28)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(28, 28, 28)
+                    .addComponent(jLabel4)
+                    .addComponent(txt_password, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_age, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -165,7 +165,7 @@ public class View extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_career, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCrear)
                     .addComponent(btnEditar)
