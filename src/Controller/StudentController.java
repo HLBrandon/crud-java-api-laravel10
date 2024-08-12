@@ -2,6 +2,8 @@ package Controller;
 
 import Model.ApiStudent;
 import Model.Student;
+import Model.User;
+import View.Login;
 import View.View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,25 +17,31 @@ import javax.swing.table.DefaultTableModel;
 public class StudentController implements ActionListener, MouseListener {
 
     private Student student;
+    private User user;
     private ApiStudent apiS;
     private View view;
+    private Login login;
     private DefaultTableModel modelTablaStudent;
     private int fila = -1;
 
-    public StudentController(Student student, ApiStudent apiS, View view) {
+    public StudentController(Student student, User user, ApiStudent apiS, View view, Login login) {
         this.student = student;
+        this.user = user;
         this.apiS = apiS;
         this.view = view;
+        this.login = login;
 
         this.view.tabla.addMouseListener(this);
         this.view.btnCrear.addActionListener(this);
         this.view.btnEditar.addActionListener(this);
         this.view.btnEliminar.addActionListener(this);
         this.view.btnLimpiar.addActionListener(this);
+        this.view.btn_logout.addActionListener(this);
+
+        this.login.btn_login.addActionListener(this);
     }
 
     public void run() {
-
         view.setTitle("Simple CRUD with API Laravel");
         view.setResizable(false);
         view.setLocationRelativeTo(null);
@@ -41,12 +49,39 @@ public class StudentController implements ActionListener, MouseListener {
         view.btnEditar.setEnabled(false);
         view.btnEliminar.setEnabled(false);
         cargarTable(view.tabla);
+        //login.setVisible(false);
+        login.dispose();
         view.setVisible(true);
+    }
 
+    public void runLogin() {
+        login.setTitle("Login");
+        login.setResizable(false);
+        login.setLocationRelativeTo(null);
+        //view.setVisible(false);
+        view.dispose();
+        login.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == login.btn_login) {
+            if (!"".equals(login.txt_email.getText()) && !"".equals(String.valueOf(login.txt_password.getPassword()))) {
+                user.setEmail(login.txt_email.getText());
+                user.setPassword(String.valueOf(login.txt_password.getPassword()));
+                if (apiS.login(user)) {
+                    limpiarCampos();
+                    view.txt_user_name.setText(user.getName());
+                    view.txt_user_email.setText(user.getEmail());
+                    run();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Incorrect email/password");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Complete the entire form");
+            }
+        }
 
         if (e.getSource() == view.btnCrear) {
             if (!"".equals(view.txt_firstName.getText()) && !"".equals(view.txt_lastName.getText()) && !"".equals(view.txt_email.getText()) && !"".equals(String.valueOf(view.txt_password.getPassword())) && !"".equals(view.txt_age.getText()) && !"".equals(view.txt_career.getText())) {
@@ -119,6 +154,15 @@ public class StudentController implements ActionListener, MouseListener {
         if (e.getSource() == view.btnLimpiar) {
             limpiarCampos();
         }
+        
+        if (e.getSource() == view.btn_logout) {
+            if (apiS.logout(user)) {
+                limpiarCampos();
+                runLogin();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error in execute");
+            }
+        }
 
     }
 
@@ -134,6 +178,8 @@ public class StudentController implements ActionListener, MouseListener {
         view.btnCrear.setEnabled(true);
         view.btnEditar.setEnabled(false);
         view.btnEliminar.setEnabled(false);
+        login.txt_email.setText("");
+        login.txt_password.setText("");
     }
 
     public void cargarTable(JTable tabla) {

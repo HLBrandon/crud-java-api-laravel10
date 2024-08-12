@@ -232,4 +232,79 @@ public class ApiStudent {
         }
     }
     
+    public boolean login(User user) {
+
+        JSONObject post = new JSONObject();
+        post.put("email", user.getEmail());
+        post.put("password", user.getPassword());
+
+        try {
+            URL url = new URL("http://127.0.0.1:8000/api/login/");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("accept", "application/json");
+            conn.setDoOutput(true);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = post.toString().getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            responseCode = conn.getResponseCode();
+
+            if (responseCode == 200) { // 201 Codigo HTTP para creación exitosa
+                StringBuilder stringBuilder = new StringBuilder();
+                Scanner sc = new Scanner(conn.getInputStream());
+                while (sc.hasNext()) {                    
+                    stringBuilder.append(sc.nextLine());
+                }
+                sc.close();
+                
+                JSONObject data = new JSONObject(stringBuilder.toString());
+                JSONObject json_user = data.getJSONObject("user");
+               
+                user.setId(json_user.getInt("id"));
+                user.setName(json_user.getString("name"));
+                user.setEmail(json_user.getString("email"));
+                user.setPassword("");
+                user.setAccess_token(data.getString("access_token"));
+                user.setType_token(data.getString("type_token"));
+                
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    public boolean logout(User user) {
+
+        try {
+            URL url = new URL("http://127.0.0.1:8000/api/logout/");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("accept", "application/json");
+            conn.setRequestProperty("Authorization", user.getType_token() + " " + user.getAccess_token());
+            conn.connect();
+
+            responseCode = conn.getResponseCode();
+
+            if (responseCode != 401) { // 401 codigo HTTP para No Autenticado
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
 }
