@@ -92,7 +92,7 @@ public class StudentController implements ActionListener, MouseListener {
                 student.setAge(Integer.parseInt(view.txt_age.getText()));
                 student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
                 System.out.println(student.getPassword());
-                if (apiS.create(student)) {
+                if (apiS.create(student, user)) {
                     cargarCreateRow(view.tabla);
                     JOptionPane.showMessageDialog(null, "Student Created successfully");
                     limpiarCampos();
@@ -114,7 +114,7 @@ public class StudentController implements ActionListener, MouseListener {
                     student.setPassword(String.valueOf(view.txt_password.getPassword()));
                     student.setAge(Integer.parseInt(view.txt_age.getText()));
                     student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
-                    if (apiS.update(student)) {
+                    if (apiS.update(student, user)) {
                         view.tabla.setValueAt(student.getId(), fila, 0);
                         view.tabla.setValueAt(student.getFirst_name() + " " + student.getLast_name(), fila, 1);
                         view.tabla.setValueAt(student.getEmail(), fila, 2);
@@ -138,7 +138,7 @@ public class StudentController implements ActionListener, MouseListener {
                 int res = JOptionPane.showConfirmDialog(null, "Delete this Student?", "Delete", JOptionPane.YES_NO_OPTION);
                 if (res == JOptionPane.YES_OPTION) {
                     student.setId(Integer.parseInt(view.txt_id.getText()));
-                    if (apiS.delete(student)) {
+                    if (apiS.delete(student, user)) {
                         cargarRemoveRow(view.tabla);
                         JOptionPane.showMessageDialog(null, "Student Deleted successfully");
                     } else {
@@ -184,7 +184,7 @@ public class StudentController implements ActionListener, MouseListener {
 
     public void cargarTable(JTable tabla) {
         modelTablaStudent = (DefaultTableModel) tabla.getModel();
-        List<Student> lista = apiS.index(student);
+        List<Student> lista = apiS.index(student, user);
         Object[] obj = new Object[5];
         for (int i = 0; i < lista.size(); i++) {
             obj[0] = lista.get(i).getId();
@@ -221,7 +221,7 @@ public class StudentController implements ActionListener, MouseListener {
             fila = view.tabla.getSelectedRow();
             int id = view.tabla.getValueAt(fila, 0).hashCode();
             student.setId(id);
-            if (apiS.show(student)) {
+            if (apiS.show(student, user)) {
                 view.txt_id.setText(String.valueOf(student.getId()));
                 view.txt_firstName.setText(student.getFirst_name());
                 view.txt_lastName.setText(student.getLast_name());

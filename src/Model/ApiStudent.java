@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,30 +14,33 @@ public class ApiStudent {
 
     private final String urlApi = "http://127.0.0.1:8000/api/student/";
     private int responseCode;
-    
-    public List index (Student student) {
-        List<Student>datos = new ArrayList<>();
-        
+
+    public List index(Student student, User user) {
+        List<Student> datos = new ArrayList<>();
+
         try {
             URL url = new URL(urlApi);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("accept", "application/json");
+            conn.setRequestProperty("Authorization", user.getType_token() + " " + user.getAccess_token());
             conn.connect();
 
             responseCode = conn.getResponseCode();
 
             if (responseCode == 200) { // 200 Codigo HTTP exitoso
-                
+
                 StringBuilder stringBuilder = new StringBuilder();
-                Scanner sc = new Scanner(url.openStream());
-                
-                while (sc.hasNext()) {                    
+                Scanner sc = new Scanner(conn.getInputStream()); //url.openStream()
+
+                while (sc.hasNext()) {
                     stringBuilder.append(sc.nextLine());
                 }
                 sc.close();
-                
+
                 JSONArray jsonArray = new JSONArray(stringBuilder.toString());
-                
+
                 for (int i = 0; i < jsonArray.length(); i++) {
                     student = new Student();
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -49,19 +53,19 @@ public class ApiStudent {
                     student.setCareer_name(jsonObject.getJSONObject("career").getString("career_name"));
                     datos.add(student);
                 }
-                
+
             } else {
-                throw new RuntimeException("Ocurrio un error: " + responseCode);
+                throw new RuntimeException("Error codigo index: " + responseCode);
             }
 
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (IOException | RuntimeException e) {
+            System.out.println("Error Index: " + e);
         }
-        
+
         return datos;
     }
 
-    public boolean create(Student student) {
+    public boolean create(Student student, User user) {
 
         JSONObject post = new JSONObject();
         post.put("first_name", student.getFirst_name());
@@ -77,6 +81,7 @@ public class ApiStudent {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("accept", "application/json");
+            conn.setRequestProperty("Authorization", user.getType_token() + " " + user.getAccess_token());
             conn.setDoOutput(true);
 
             try (OutputStream os = conn.getOutputStream()) {
@@ -89,21 +94,21 @@ public class ApiStudent {
             if (responseCode == 201) { // 201 Codigo HTTP para creación exitosa
                 StringBuilder stringBuilder = new StringBuilder();
                 Scanner sc = new Scanner(conn.getInputStream());
-                while (sc.hasNext()) {                    
+                while (sc.hasNext()) {
                     stringBuilder.append(sc.nextLine());
                 }
                 sc.close();
-                
+
                 JSONObject jsonObject = new JSONObject(stringBuilder.toString());
                 JSONObject data = jsonObject.getJSONObject("data");
-               
+
                 student.setId(data.getInt("id"));
                 student.setFirst_name(data.getString("first_name"));
                 student.setLast_name(data.getString("last_name"));
                 student.setEmail(data.getString("email"));
                 student.setAge(data.getInt("age"));
                 student.setCareer_name(data.getJSONObject("career").getString("career_name"));
-                
+
                 return true;
             } else {
                 return false;
@@ -115,7 +120,7 @@ public class ApiStudent {
         }
     }
 
-    public boolean update(Student student) {
+    public boolean update(Student student, User user) {
         JSONObject post = new JSONObject();
         post.put("first_name", student.getFirst_name());
         post.put("last_name", student.getLast_name());
@@ -134,6 +139,7 @@ public class ApiStudent {
             conn.setRequestMethod("PUT");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("accept", "application/json");
+            conn.setRequestProperty("Authorization", user.getType_token() + " " + user.getAccess_token());
             conn.setDoOutput(true);
 
             try (OutputStream os = conn.getOutputStream()) {
@@ -146,7 +152,7 @@ public class ApiStudent {
             if (responseCode == 200) { // 200 Codigo HTTP para Exito
                 StringBuilder stringBuilder = new StringBuilder();
                 Scanner sc = new Scanner(conn.getInputStream());
-                while (sc.hasNext()) {                    
+                while (sc.hasNext()) {
                     stringBuilder.append(sc.nextLine());
                 }
                 sc.close();
@@ -169,12 +175,15 @@ public class ApiStudent {
         }
     }
 
-    public boolean show(Student student) {
+    public boolean show(Student student, User user) {
 
         try {
             URL url = new URL(urlApi + student.getId());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("accept", "application/json");
+            conn.setRequestProperty("Authorization", user.getType_token() + " " + user.getAccess_token());
             conn.connect();
 
             responseCode = conn.getResponseCode();
@@ -182,7 +191,7 @@ public class ApiStudent {
             if (responseCode != 404) { // 404 codigo HTTP para No Encontrado
 
                 StringBuilder sb = new StringBuilder();
-                Scanner sc = new Scanner(url.openStream());
+                Scanner sc = new Scanner(conn.getInputStream());
 
                 while (sc.hasNext()) {
                     sb.append(sc.nextLine());
@@ -199,7 +208,7 @@ public class ApiStudent {
                 student.setAge(jsonObject.getInt("age"));
                 student.setCareer_id(jsonObject.getJSONObject("career").getInt("career_id"));
                 return true;
-                
+
             } else {
                 System.out.println("Response Code: " + responseCode);
                 return false;
@@ -211,12 +220,14 @@ public class ApiStudent {
         }
     }
 
-    public boolean delete(Student student) {
+    public boolean delete(Student student, User user) {
         try {
             URL url = new URL(urlApi + student.getId());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("DELETE");
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("accept", "application/json");
+            conn.setRequestProperty("Authorization", user.getType_token() + " " + user.getAccess_token());
 
             responseCode = conn.getResponseCode();
 
@@ -231,7 +242,7 @@ public class ApiStudent {
             return false;
         }
     }
-    
+
     public boolean login(User user) {
 
         JSONObject post = new JSONObject();
@@ -256,21 +267,21 @@ public class ApiStudent {
             if (responseCode == 200) { // 201 Codigo HTTP para creación exitosa
                 StringBuilder stringBuilder = new StringBuilder();
                 Scanner sc = new Scanner(conn.getInputStream());
-                while (sc.hasNext()) {                    
+                while (sc.hasNext()) {
                     stringBuilder.append(sc.nextLine());
                 }
                 sc.close();
-                
+
                 JSONObject data = new JSONObject(stringBuilder.toString());
                 JSONObject json_user = data.getJSONObject("user");
-               
+
                 user.setId(json_user.getInt("id"));
                 user.setName(json_user.getString("name"));
                 user.setEmail(json_user.getString("email"));
                 user.setPassword("");
                 user.setAccess_token(data.getString("access_token"));
                 user.setType_token(data.getString("type_token"));
-                
+
                 return true;
             } else {
                 return false;
@@ -281,7 +292,7 @@ public class ApiStudent {
             return false;
         }
     }
-    
+
     public boolean logout(User user) {
 
         try {
@@ -306,5 +317,5 @@ public class ApiStudent {
             return false;
         }
     }
-    
+
 }
