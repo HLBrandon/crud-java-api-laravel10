@@ -91,7 +91,6 @@ public class StudentController implements ActionListener, MouseListener {
                 student.setPassword(String.valueOf(view.txt_password.getPassword()));
                 student.setAge(Integer.parseInt(view.txt_age.getText()));
                 student.setCareer_id(Integer.parseInt(view.txt_career.getText()));
-                System.out.println(student.getPassword());
                 if (apiS.create(student, user)) {
                     cargarCreateRow(view.tabla);
                     JOptionPane.showMessageDialog(null, "Student Created successfully");
