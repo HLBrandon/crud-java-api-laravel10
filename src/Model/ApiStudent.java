@@ -14,13 +14,14 @@ public class ApiStudent {
 
     private final String urlApi = "https://my-first-api-production-34b1.up.railway.app/api/student/";
     private int responseCode;
+    private HttpURLConnection conn = null;
 
     public List index(Student student, User user) {
         List<Student> datos = new ArrayList<>();
 
         try {
             URL url = new URL(urlApi);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("accept", "application/json");
@@ -60,6 +61,10 @@ public class ApiStudent {
 
         } catch (IOException | RuntimeException e) {
             System.out.println("Error Index: " + e);
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
 
         return datos;
@@ -77,7 +82,7 @@ public class ApiStudent {
 
         try {
             URL url = new URL(urlApi);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("accept", "application/json");
@@ -117,6 +122,10 @@ public class ApiStudent {
         } catch (Exception e) {
             System.out.println(e);
             return false;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
     }
 
@@ -135,7 +144,7 @@ public class ApiStudent {
 
         try {
             URL url = new URL(urlApi + student.getId());
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("PUT");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("accept", "application/json");
@@ -172,6 +181,10 @@ public class ApiStudent {
         } catch (Exception e) {
             System.out.println(e);
             return false;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
     }
 
@@ -179,7 +192,7 @@ public class ApiStudent {
 
         try {
             URL url = new URL(urlApi + student.getId());
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("accept", "application/json");
@@ -217,13 +230,17 @@ public class ApiStudent {
         } catch (Exception e) {
             System.out.println(e);
             return false;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
     }
 
     public boolean delete(Student student, User user) {
         try {
             URL url = new URL(urlApi + student.getId());
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("DELETE");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("accept", "application/json");
@@ -240,6 +257,10 @@ public class ApiStudent {
         } catch (Exception e) {
             System.out.println(e);
             return false;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
     }
 
@@ -251,7 +272,7 @@ public class ApiStudent {
 
         try {
             URL url = new URL("https://my-first-api-production-34b1.up.railway.app/api/login/");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("accept", "application/json");
@@ -290,6 +311,10 @@ public class ApiStudent {
         } catch (Exception e) {
             System.out.println(e);
             return false;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
     }
 
@@ -297,7 +322,7 @@ public class ApiStudent {
 
         try {
             URL url = new URL("https://my-first-api-production-34b1.up.railway.app/api/logout");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestProperty("accept", "application/json");
@@ -315,6 +340,10 @@ public class ApiStudent {
         } catch (Exception e) {
             System.out.println(e);
             return false;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
     }
 
