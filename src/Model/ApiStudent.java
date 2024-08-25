@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 public class ApiStudent {
 
-    private final String urlApi = "https://my-first-api-production-34b1.up.railway.app/api/student/";
+    private final String urlApi = "http://127.0.0.1:8000/api/student/";
     private int responseCode;
     private HttpURLConnection conn = null;
 
@@ -271,7 +271,7 @@ public class ApiStudent {
         post.put("password", user.getPassword());
 
         try {
-            URL url = new URL("https://my-first-api-production-34b1.up.railway.app/api/login/");
+            URL url = new URL("http://127.0.0.1:8000/api/login/");
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
@@ -321,7 +321,7 @@ public class ApiStudent {
     public boolean logout(User user) {
 
         try {
-            URL url = new URL("https://my-first-api-production-34b1.up.railway.app/api/logout");
+            URL url = new URL("http://127.0.0.1:8000/api/logout");
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json");
