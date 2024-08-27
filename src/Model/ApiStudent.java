@@ -20,6 +20,7 @@ public class ApiStudent {
         List<Student> datos = new ArrayList<>();
 
         try {
+            SSLUtil.configureSSL();
             URL url = new URL(urlApi);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -271,6 +272,9 @@ public class ApiStudent {
         post.put("password", user.getPassword());
 
         try {
+            
+            SSLUtil.configureSSL();
+            
             URL url = new URL("http://127.0.0.1:8000/api/login/");
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
