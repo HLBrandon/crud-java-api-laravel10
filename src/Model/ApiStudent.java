@@ -12,6 +12,8 @@ import org.json.JSONObject;
 
 public class ApiStudent {
 
+    // https://my-first-api-production-c61e.up.railway.app/
+    
     private final String urlApi = "http://127.0.0.1:8000/api/student/";
     private int responseCode;
     private HttpURLConnection conn = null;
@@ -82,6 +84,7 @@ public class ApiStudent {
         post.put("career_id", student.getCareer_id());
 
         try {
+            SSLUtil.configureSSL();
             URL url = new URL(urlApi);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
@@ -144,6 +147,7 @@ public class ApiStudent {
         post.put("career_id", student.getCareer_id());
 
         try {
+            SSLUtil.configureSSL();
             URL url = new URL(urlApi + student.getId());
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("PUT");
@@ -192,6 +196,7 @@ public class ApiStudent {
     public boolean show(Student student, User user) {
 
         try {
+            SSLUtil.configureSSL();
             URL url = new URL(urlApi + student.getId());
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -240,6 +245,7 @@ public class ApiStudent {
 
     public boolean delete(Student student, User user) {
         try {
+            SSLUtil.configureSSL();
             URL url = new URL(urlApi + student.getId());
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("DELETE");
@@ -325,6 +331,7 @@ public class ApiStudent {
     public boolean logout(User user) {
 
         try {
+            SSLUtil.configureSSL();
             URL url = new URL("http://127.0.0.1:8000/api/logout");
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
