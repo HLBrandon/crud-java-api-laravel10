@@ -70,4 +70,11 @@
     nbproject/build-impl.xml file. 
 
     -->
+    
+    <target name="-post-compile">
+        <copy todir="${build.classes.dir}">
+            <fileset dir="src/Certs" />
+        </copy>
+    </target>
+    
 </project>
